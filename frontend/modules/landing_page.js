@@ -35,9 +35,9 @@ async function fetchCities() {
 function addCityToDOM(id, city, description, image) {
   let data = document.getElementById("data");
   let div = document.createElement("div");
-  div.id = id;
+  // div.id = id;
   div.className = "col-sm-6 col-lg-3 mb-4";
-  div.innerHTML = `<a href="pages/adventures/?city=${id}">
+  div.innerHTML = `<a href="pages/adventures/?city=${id}" id="${id}">
   <div class="tile">
     <img
       src="${image}"
