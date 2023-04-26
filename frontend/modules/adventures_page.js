@@ -3,13 +3,22 @@ import config from "../conf/index.js";
 
 //Implementation to extract city from query params
 function getCityFromURL(search) {
-  // TODO: MODULE_ADVENTURES
+  const obj = new URLSearchParams(search);
+  // console.log(obj.get('city'));
+  return obj.get('city');
+  // TODO: MODULE_ADVENTURES 
   // 1. Extract the city id from the URL's Query Param and return it
 
 }
 
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
+  try {
+    return await fetch("http://65.0.70.86:8082/adventures?city=" + city)
+      .then(data => data.json());
+  } catch (error) {
+    return null;
+  }
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
 
@@ -17,6 +26,33 @@ async function fetchAdventures(city) {
 
 //Implementation of DOM manipulation to add adventures for the given city from list of adventures
 function addAdventureToDOM(adventures) {
+  // console.log(adventures);
+  let data = document.getElementById("data");
+  for(let i=0;i<adventures.length;i++){
+    let div = document.createElement("div");
+    div.className = "col-sm-6 col-lg-3 mb-4"; 
+    div.innerHTML = `<a href="detail/?adventure=${adventures[i].id}" id = "${adventures[i].id}">
+              <div class = "bg-warning" style="position: absolute; z-index: 1; padding: 5px; margin-left: 200px; margin-top: 20px; width: 70px; border-radius: 10px 0px 0px 10px;"><p>${adventures[i].category}</p></div>
+              <div class=" card activity-card">
+                <img
+                  src="${adventures[i].image}"
+                  alt="Image Not available"
+                />
+                <div class="card-body d-flex-column" style = "width: 100%">
+                  <div class="d-flex justify-content-between" style = "width: 100%">
+                    <div><p>${adventures[i].name}<p></div>
+                    <div><p>${adventures[i].costPerHead}</p></div>
+                  </div>
+                  <div class="d-flex justify-content-between" style = "width: 100%">
+                    <div><p>Duration</p></div>
+                    <div><p>${adventures[i].duration} hours</p></div>
+                  </div>
+                </div>
+              </div>
+            </a>`;
+    data.append(div);
+  }
+  
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
 
