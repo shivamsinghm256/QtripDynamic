@@ -3,11 +3,10 @@ import config from "../conf/index.js";
 async function init() {
   //Fetches list of all cities along with their images and description
   let cities = await fetchCities();
-  // console.log("From Init method.")
+
   //Updates the DOM with the cities
   if (cities) {
     cities.forEach((key) => {
-      
       addCityToDOM(key.id, key.city, key.description, key.image);
     });
   }
@@ -17,7 +16,7 @@ async function init() {
 async function fetchCities() {
 
   try {
-    return await fetch("http://65.0.70.86:8082/cities")
+    return await fetch("http://13.127.29.85:8082/cities")
     .then(data => data.json());
     // .then(post => console.log(post));
   }

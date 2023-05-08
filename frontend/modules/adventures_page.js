@@ -14,7 +14,7 @@ function getCityFromURL(search) {
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   try {
-    return await fetch("http://65.0.70.86:8082/adventures?city=" + city)
+    return await fetch("http://13.127.29.85:8082/adventures?city=" + city)
       .then(data => data.json());
   } catch (error) {
     return null;
@@ -67,6 +67,7 @@ function filterByDuration(list, low, high) {
 
 //Implementation of filtering by category which takes in a list of adventures, list of categories to be filtered upon and returns a filtered list of adventures.
 function filterByCategory(list, categoryList) {
+
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on their Category and return filtered list
 
