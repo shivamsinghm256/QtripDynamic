@@ -62,9 +62,7 @@ function addAdventureToDOM(adventures) {
 function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
-  // console.log(list);
   list = list.filter((adv) => (adv.duration>=low && adv.duration<high));
-  // console.log(list);
   return list;
 
 }
@@ -113,9 +111,7 @@ function filterFunction(list, filters) {
 function saveFiltersToLocalStorage(filters) {
   // TODO: MODULE_FILTERS
   // 1. Store the filters as a String to localStorage
-  console.log(filters);
-  localStorage.setItem(filters, JSON.stringify(filters));
-
+  localStorage.setItem("filters", JSON.stringify(filters));
   return true;
 }
 
