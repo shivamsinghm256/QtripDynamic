@@ -62,7 +62,7 @@ function addAdventureToDOM(adventures) {
 function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
-  list = list.filter((adv) => (adv.duration>=low && adv.duration<high));
+  list = list.filter((adv) => (adv.duration>=low && adv.duration<=high));
   return list;
 
 }
