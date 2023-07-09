@@ -16,7 +16,7 @@ async function init() {
 async function fetchCities() {
 
   try {
-    return await fetch("http://13.127.29.85:8082/cities")
+    return await fetch("http://3.111.181.230:8082/cities")
     .then(data => data.json());
     // .then(post => console.log(post));
   }

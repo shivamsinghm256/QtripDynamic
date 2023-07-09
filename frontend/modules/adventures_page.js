@@ -14,10 +14,10 @@ function getCityFromURL(search) {
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   try {
-    return await fetch("http://13.127.29.85:8082/adventures?city=" + city)
+    return await fetch("http://3.111.181.230:8082/adventures?city=" + city)
       .then(data => data.json());
   } catch (error) {
-    return null;
+      return null;
   }
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
@@ -62,6 +62,10 @@ function addAdventureToDOM(adventures) {
 function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
+  // console.log(list);
+  list = list.filter((adv) => (adv.duration>=low && adv.duration<high));
+  // console.log(list);
+  return list;
 
 }
 
@@ -70,6 +74,10 @@ function filterByCategory(list, categoryList) {
 
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on their Category and return filtered list
+  if(categoryList.length>0)
+    list = list.filter((adv) => categoryList.includes(adv.category));
+  // console.log(list);
+  return list;
 
 }
 
@@ -84,16 +92,29 @@ function filterFunction(list, filters) {
   // TODO: MODULE_FILTERS
   // 1. Handle the 3 cases detailed in the comments above and return the filtered list of adventures
   // 2. Depending on which filters are needed, invoke the filterByDuration() and/or filterByCategory() methods
-
-
-  // Place holder for functionality to work in the Stubs
-  return list;
+  // console.log(list);
+  let filteredList = [];
+  if(filters.duration.length>0 && filters.category.length>0){
+    let duList = filters.duration.split('-');
+    filteredList = filterByDuration(list, parseInt(duList[0]), parseInt(duList[1]));
+    filteredList = filterByCategory(filteredList, filters.category);
+  }
+  else if(filters.duration.length>0){
+    let duList = filters.duration.split('-');
+    filteredList = filterByDuration(list, parseInt(duList[0]), parseInt(duList[1]));
+  }
+  else{
+    filteredList = filterByCategory(list, filters.category);
+  }
+  return filteredList;
 }
 
 //Implementation of localStorage API to save filters to local storage. This should get called everytime an onChange() happens in either of filter dropdowns
 function saveFiltersToLocalStorage(filters) {
   // TODO: MODULE_FILTERS
   // 1. Store the filters as a String to localStorage
+  console.log(filters);
+  localStorage.setItem(filters, JSON.stringify(filters));
 
   return true;
 }
@@ -102,6 +123,7 @@ function saveFiltersToLocalStorage(filters) {
 function getFiltersFromLocalStorage() {
   // TODO: MODULE_FILTERS
   // 1. Get the filters from localStorage and return String read as an object
+  return JSON.parse(localStorage.getItem("filter"));
 
 
   // Place holder for functionality to work in the Stubs
@@ -115,7 +137,14 @@ function getFiltersFromLocalStorage() {
 function generateFilterPillsAndUpdateDOM(filters) {
   // TODO: MODULE_FILTERS
   // 1. Use the filters given as input, update the Duration Filter value and Generate Category Pills
-
+  var data = document.getElementById("category-list");
+  for(let i=0;i<filters.category.length;i++){
+    var tag = document.createElement("div");
+    tag.className = "border border-warning rounded-pill ms-3 ps-2 pe-2";
+    var text = document.createTextNode(filters.category[i]);
+    tag.appendChild(text);
+    data.appendChild(tag);
+  }
 }
 export {
   getCityFromURL,
