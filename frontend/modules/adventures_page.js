@@ -14,7 +14,7 @@ function getCityFromURL(search) {
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   try {
-    return await fetch("http://3.111.181.230:8082/adventures?city=" + city)
+    return await fetch("http://35.154.95.143:8082/adventures?city=" + city)
       .then(data => data.json());
   } catch (error) {
       return null;
