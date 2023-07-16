@@ -1,4 +1,4 @@
-import { Console } from "console";
+
 import config from "../conf/index.js";
 
 //Implementation to extract adventure ID from query params
@@ -14,7 +14,7 @@ async function fetchAdventureDetails(adventureId) {
   // 1. Fetch the details of the adventure by making an API call
   // console.log(typeof(adventureId));
   try {
-    return await fetch("http://35.154.95.143:8082/adventures/detail?adventure=" + adventureId)
+    return await fetch(config.backendEndpoint +"/adventures/detail/?adventure=" + adventureId)
       .then(data => data.json());
   } catch (error) {
       return null;
@@ -28,10 +28,10 @@ function addAdventureDetailsToDOM(adventure) {
   // 1. Add the details of the adventure to the HTML DOM
   // console.log(adventure);
   let name = document.getElementById("adventure-name");
-  name.innerHTML = `${adventure.name}`;
+  name.textContent = adventure.name;
 
   let subtitle = document.getElementById("adventure-subtitle");
-  subtitle.innerHTML = `${adventure.subtitle}`;
+  subtitle.textContent = adventure.subtitle;
 
   let imgGallery = document.getElementById("photo-gallery");
   for(let i=0;i<adventure.images.length;i++){
@@ -43,7 +43,7 @@ function addAdventureDetailsToDOM(adventure) {
   }
 
   let content = document.getElementById("adventure-content");
-  content.innerHTML = `${adventure.content}`;
+  content.textContent = adventure.content;
 }
 
 //Implementation of bootstrap gallery component
@@ -51,7 +51,6 @@ function addBootstrapPhotoGallery(images) {
   
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Add the bootstrap carousel to show the Adventure images
-
   let imgGallery = document.getElementById("photo-gallery");
 
   let carouselMainDiv = document.createElement("div");
@@ -64,12 +63,12 @@ function addBootstrapPhotoGallery(images) {
   for(let i=0;i<images.length;i++){
     let button = document.createElement("button");
     button.type = "button";
-    button.setAttribute("data-bs-target", "carousel-indicators-id");
+    button.setAttribute("data-bs-target", "#carousel-indicators-id");
     button.setAttribute("data-bs-slide-to", i.toString());
     if(i===0){
       button.className = "active";
     }
-    carouselButtonDiv.appendChild(button);
+    carouselButtonDiv.append(button);
   }
 
   let carouselInnerDiv = document.createElement("div");
@@ -86,13 +85,31 @@ function addBootstrapPhotoGallery(images) {
     img.setAttribute("src", images[i]);
     img.setAttribute("alt", "Image not available");
     img.className = "activity-card-image";
-    div.appendChild(img);
-    carouselInnerDiv.appendChild(div);    
+    div.append(img);
+    carouselInnerDiv.append(div);    
   }
-  carouselMainDiv.appendChild(carouselButtonDiv);
-  carouselMainDiv.appendChild(carouselInnerDiv);
-  
-  imgGallery.appendChild(carouselMainDiv);
+
+  let nextButton = document.createElement("button");
+  nextButton.className = "carousel-control-next";
+  nextButton.type = "button";
+  nextButton.setAttribute("data-bs-target", "#carousel-indicators-id");
+  nextButton.setAttribute("data-bs-slide", "next");
+  nextButton.innerHTML = `<span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>`;
+
+  let prevButton = document.createElement("button");
+  prevButton.className = "carousel-control-prev";
+  prevButton.type = "button";
+  prevButton.setAttribute("data-bs-target", "#carousel-indicators-id");
+  prevButton.setAttribute("data-bs-slide", "prev");
+  prevButton.innerHTML = `<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>`;
+  carouselMainDiv.append(carouselButtonDiv);
+  carouselMainDiv.append(carouselInnerDiv);
+  carouselMainDiv.append(prevButton);
+  carouselMainDiv.append(nextButton);
+  imgGallery.innerHTML = ``;
+  imgGallery.append(carouselMainDiv);
 }
 
 //Implementation of conditional rendering of DOM based on availability
