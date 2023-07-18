@@ -14,7 +14,7 @@ function getCityFromURL(search) {
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
   try {
-    return await fetch("http://13.126.220.123:8082/adventures?city=" + city)
+    return await fetch(config.backendEndpoint + "/adventures?city=" + city)
       .then(data => data.json());
   } catch (error) {
       return null;
@@ -123,7 +123,7 @@ function getFiltersFromLocalStorage() {
 
 
   // Place holder for functionality to work in the Stubs
-  return null;
+  // return null;
 }
 
 //Implementation of DOM manipulation to add the following filters to DOM :
