@@ -40,7 +40,7 @@ function addReservationToTable(reservations) {
     2. The booking time should appear in a format like 4 November 2020, 9:32:31 pm
   */
   const options = { year: "numeric", day: "numeric", month: "long", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, };
-    // console.log(currentDate.toLocaleDateString('de-DE', options));
+
  let reservation_Table = document.getElementById("reservation-table");
  for(let i=0;i<reservations.length;i++){
   let str = new Date(reservations[i].time).toLocaleString("en-IN",options);
@@ -51,7 +51,7 @@ function addReservationToTable(reservations) {
   <td scope="col">${reservations[i].person}</td>
   <td scope="col">${new Date(reservations[i].date).toLocaleDateString("en-IN")}</td>
   <td scope="col">${reservations[i].price}</td>
-  <td scope="col">${str.split("at")[0].trim()}, ${str.split("at")[1].trim()}</td>
+  <td scope="col">${str.split("at")[0].trim()},${str.split("at")[1]}</td>
   <td scope="col"><div class = "reservation-visit-button" id="${reservations[i].id}"><a href="../detail/?adventure=${reservations[i].adventure}">Visit Adventure</a></div></td>`;
   reservation_Table.append(tr);
  }
