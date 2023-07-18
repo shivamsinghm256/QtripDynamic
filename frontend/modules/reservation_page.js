@@ -51,7 +51,7 @@ function addReservationToTable(reservations) {
   <td scope="col">${reservations[i].person}</td>
   <td scope="col">${new Date(reservations[i].date).toLocaleDateString("en-IN")}</td>
   <td scope="col">${reservations[i].price}</td>
-  <td scope="col">${str.split("at")[0].trim()},${str.split("at")[1]}</td>
+  <td scope="col">${str.split("at")[0].trim()}, ${str.split("at")[1].trim()}</td>
   <td scope="col"><div class = "reservation-visit-button" id="${reservations[i].id}"><a href="../detail/?adventure=${reservations[i].adventure}">Visit Adventure</a></div></td>`;
   reservation_Table.append(tr);
  }
